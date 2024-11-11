@@ -1,14 +1,17 @@
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Movies from "./pages/movies";
+import MovieDetails from "./pages/movieDetails";
 import "./App.css";
-import { Counter } from "./features/counter/Counter";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        MERHABA HEADER
-        <Counter />
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Movies />} />
+        <Route path="/movie/:id" element={<MovieDetails />} />
+      </Routes>
+    </Router>
   );
 }
 
