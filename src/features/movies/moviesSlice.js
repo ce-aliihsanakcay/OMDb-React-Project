@@ -6,9 +6,9 @@ import {
 
 export const fetchMovies = createAsyncThunk(
   "movies/fetchMovies",
-  async ({ searchTerm, type, releaseYear, page }) => {
+  async ({ searchInput, type, releaseYear, page }) => {
     const response = await fetchMoviesBySearch({
-      searchTerm,
+      searchInput,
       type,
       releaseYear,
       page,
@@ -38,10 +38,19 @@ const movieListSlice = createSlice({
     movies: [],
     status: null,
     totalResults: 0,
+    searchParams: {
+      searchInput: "Pokemon",
+      releaseYear: "",
+      type: "",
+      page: 1,
+    },
   },
   reducers: {
     setSelectedMovie: (state, action) => {
       state.selectedMovieDetails = action.payload;
+    },
+    setSearchParams: (state, action) => {
+      state.searchParams = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -50,13 +59,20 @@ const movieListSlice = createSlice({
         state.status = "loading";
       })
       .addCase(fetchMovies.fulfilled, (state, action) => {
-        const { Search, totalResults } = action.payload;
-        state.movies = Search;
-        state.totalResults = Number(totalResults);
+        const { Search, totalResults, Response, Error } = action.payload;
+        if (Response === "True") {
+          state.movies = Search;
+          state.totalResults = Number(totalResults);
+        } else {
+          state.movies = [];
+          state.totalResults = 0;
+          state.error = Error;
+        }
         state.status = "succeeded";
       })
-      .addCase(fetchMovies.rejected, (state) => {
+      .addCase(fetchMovies.rejected, (state, action) => {
         state.status = "failed";
+        state.error = action.error.message;
       })
       .addCase(fetchMovieDetails.pending, (state) => {
         state.status = "loading";
@@ -65,12 +81,13 @@ const movieListSlice = createSlice({
         state.selectedMovieDetails = action.payload;
         state.status = "succeeded";
       })
-      .addCase(fetchMovieDetails.rejected, (state) => {
+      .addCase(fetchMovieDetails.rejected, (state, action) => {
         state.status = "failed";
+        state.error = action.error.message;
       });
   },
 });
 
-export const { setSelectedMovie } = movieListSlice.actions
+export const { setSelectedMovie, setSearchParams } = movieListSlice.actions;
 
 export default movieListSlice.reducer;

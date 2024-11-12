@@ -5,17 +5,17 @@ const OMDB_API_KEY = "41442880";
 
 //get movie list
 export const fetchMoviesBySearch = async ({
-  searchTerm,
+  searchInput,
   type,
   releaseYear,
   page = 1,
 }) => {
-  if (!searchTerm) {
+  if (!searchInput) {
     throw new Error("Movie title to search for is required!");
   }
   const queryParams = new URLSearchParams({
     apiKey: encodeURIComponent(OMDB_API_KEY),
-    s: encodeURIComponent(searchTerm),
+    s: encodeURIComponent(searchInput),
     type: type ? encodeURIComponent(type) : "",
     y: releaseYear ? encodeURIComponent(releaseYear) : "",
     page: page ? encodeURIComponent(page) : "",
@@ -24,11 +24,13 @@ export const fetchMoviesBySearch = async ({
   try {
     const url = `${OMDB_BASE_URL}?${queryParams}`;
     const response = await axios.get(url);
-    let promises = response.data.Search.map(async (movie) =>
-      fetchMovieByTitleOrImdbID({ imdbID: movie.imdbID })
-    );
-    promises = await Promise.allSettled(promises);
-    response.data.Search = promises.map((p) => p.value);
+    if (response.data.Search?.length > 0) {
+      let promises = response.data.Search.map(async (movie) =>
+        fetchMovieByTitleOrImdbID({ imdbID: movie.imdbID })
+      );
+      promises = await Promise.allSettled(promises);
+      response.data.Search = promises.map((p) => p.value);
+    }
     // console.log("response.data", response.data);
     return response.data;
   } catch (error) {
