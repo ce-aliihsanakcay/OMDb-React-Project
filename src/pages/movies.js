@@ -11,10 +11,13 @@ import InputBar from "../components/inputBar";
 import FilterSelection from "../components/filterSelection";
 import FilterYear from "../components/filterYear";
 import MovieList from "../components/movieList/list";
+import Pagination from "../components/pagination/pagination";
 import { MOVIE_TYPES } from "../constants/data";
 
 const Movies = () => {
-  const { movies, searchParams, status } = useSelector((state) => state.movies);
+  const { movies, searchParams, status, totalPages } = useSelector(
+    (state) => state.movies
+  );
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -46,6 +49,11 @@ const Movies = () => {
     dispatch(setSearchParams({ ...searchParams, type }));
   };
 
+  const setPaginationPage = (page) => {
+    dispatch(setSearchParams({ ...searchParams, page }));
+    dispatch(fetchMovies(searchParams));
+  };
+
   return (
     <div>
       <div>
@@ -63,6 +71,11 @@ const Movies = () => {
       </div>
       <div>
         <MovieList movies={movies} handleSelectedMovie={handleSelectedMovie} />
+        <Pagination
+          totalPages={totalPages}
+          currentPage={searchParams.page}
+          handlePageChange={setPaginationPage}
+        />
       </div>
       <div>{status === "loading" ? <Loading /> : ""}</div>
     </div>

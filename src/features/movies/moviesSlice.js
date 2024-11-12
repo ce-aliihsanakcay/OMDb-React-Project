@@ -3,6 +3,7 @@ import {
   fetchMoviesBySearch,
   fetchMovieByTitleOrImdbID,
 } from "../../services/omdbApi";
+import { MOVIE_ITEMS_PER_PAGE } from "../../constants/data";
 
 export const fetchMovies = createAsyncThunk(
   "movies/fetchMovies",
@@ -37,7 +38,8 @@ const movieListSlice = createSlice({
     selectedMovieDetails: {},
     movies: [],
     status: null,
-    totalResults: 0,
+    totalMovies: 0,
+    totalPages: 1,
     searchParams: {
       searchInput: "Pokemon",
       releaseYear: "",
@@ -62,10 +64,13 @@ const movieListSlice = createSlice({
         const { Search, totalResults, Response, Error } = action.payload;
         if (Response === "True") {
           state.movies = Search;
-          state.totalResults = Number(totalResults);
+          state.totalMovies = Number(totalResults);
+          state.totalPages = Math.ceil(
+            state.totalMovies / MOVIE_ITEMS_PER_PAGE
+          );
         } else {
           state.movies = [];
-          state.totalResults = 0;
+          state.totalMovies = 0;
           state.error = Error;
         }
         state.status = "succeeded";
