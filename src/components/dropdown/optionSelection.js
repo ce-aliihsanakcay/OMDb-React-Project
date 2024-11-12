@@ -1,4 +1,5 @@
 import React from "react";
+import "./optionSelection.scss";
 
 const FilterSelection = ({ optionList, option, setOption }) => {
   function capitalizeFirstLetter(string) {
@@ -6,8 +7,8 @@ const FilterSelection = ({ optionList, option, setOption }) => {
   }
 
   return (
-    <label>
-      Type:
+    <div className={"option-selection"}>
+      <label>Type: </label>
       <select value={option} onChange={(e) => setOption(e.target.value)}>
         <option value="">Select Type</option>
         {optionList.map((o, index) => (
@@ -16,7 +17,7 @@ const FilterSelection = ({ optionList, option, setOption }) => {
           </option>
         ))}
       </select>
-    </label>
+    </div>
   );
 };
 

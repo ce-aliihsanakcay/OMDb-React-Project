@@ -12,16 +12,16 @@ import SearchBar from "../components/movie/searchBar";
 import Pagination from "../components/pagination/pagination";
 
 const Movies = () => {
-  const { movies, searchParams, status, totalPages } = useSelector(
+  const { movies, searchParams, status, totalPages, error } = useSelector(
     (state) => state.movies
   );
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (movies.length > 0) return;
+    if (movies.length > 0 || error) return;
     dispatch(fetchMovies(searchParams));
-  }, [dispatch, searchParams, movies]);
+  }, [dispatch, searchParams, movies, error]);
 
   const handleSelectedMovie = (e, movie) => {
     e.preventDefault();
@@ -32,7 +32,7 @@ const Movies = () => {
 
   const setPaginationPage = (page) => {
     dispatch(setSearchParams({ ...searchParams, page }));
-    dispatch(fetchMovies(searchParams));
+    dispatch(fetchMovies({ ...searchParams, page }));
   };
 
   return (

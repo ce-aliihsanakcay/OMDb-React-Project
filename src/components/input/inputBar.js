@@ -1,14 +1,15 @@
 import React from "react";
+import "./inputBar.scss";
 
 const InputBar = ({ inputValue, setInputValue }) => {
   return (
-    <label>
-      Search Input:
+    <div className="input-bar">
+      <label>Search Input:</label>
       <input
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
       />
-    </label>
+    </div>
   );
 };
 

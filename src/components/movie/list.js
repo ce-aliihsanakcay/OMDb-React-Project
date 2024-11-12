@@ -1,5 +1,5 @@
 import React from "react";
-import "./List.scss";
+import "./list.scss";
 
 const List = ({ movies, handleSelectedMovie }) => {
   return (

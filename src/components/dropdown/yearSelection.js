@@ -1,4 +1,5 @@
 import React from "react";
+import "./yearSelection.scss";
 
 const FilterYear = ({ year, setYear }) => {
   const currentYear = new Date().getFullYear();
@@ -8,8 +9,8 @@ const FilterYear = ({ year, setYear }) => {
   );
 
   return (
-    <label>
-      Year: 
+    <div className="container_year_selection">
+      <label>Year:</label>
       <select value={year} onChange={(e) => setYear(e.target.value)}>
         <option value="">Select Year</option>
         {years.map((yearOption) => (
@@ -18,7 +19,7 @@ const FilterYear = ({ year, setYear }) => {
           </option>
         ))}
       </select>
-    </label>
+    </div>
   );
 };
 

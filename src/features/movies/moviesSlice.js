@@ -68,9 +68,14 @@ const movieListSlice = createSlice({
           state.totalPages = Math.ceil(
             state.totalMovies / MOVIE_ITEMS_PER_PAGE
           );
+          state.error = "";
         } else {
           state.movies = [];
           state.totalMovies = 0;
+          state.totalPages = Math.ceil(
+            state.totalMovies / MOVIE_ITEMS_PER_PAGE
+          );
+          state.searchParams.page = 1;
           state.error = Error;
         }
         state.status = "succeeded";

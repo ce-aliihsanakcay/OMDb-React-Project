@@ -1,0 +1,33 @@
+.option-selection {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: Arial, sans-serif;
+    color: #444;
+}
+  
+label {
+    font-size: 1rem;
+    font-weight: 600;
+}
+  
+select {
+    padding: 0.4rem 0.8rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    color: #333;
+    transition: border-color 0.3s ease;
+
+    &:focus {
+        outline: none;
+        border-color: #007bff;
+    }
+
+    option[value=""] {
+        color: #888;
+    }
+}
+  

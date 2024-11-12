@@ -5,6 +5,7 @@ import InputBar from "../input/inputBar";
 import FilterSelection from "../dropdown/optionSelection";
 import FilterYear from "../dropdown/yearSelection";
 import { fetchMovies, setSearchParams } from "../../features/movies/moviesSlice";
+import "./searchBar.scss"
 
 const SearchBar = () => {
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ const SearchBar = () => {
   };
 
   return (
-    <div>
+    <div className="search-bar">
       <InputBar
         setInputValue={setSearchInput}
         inputValue={searchParams.searchInput}
