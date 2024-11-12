@@ -1,10 +1,10 @@
 import React from "react";
-import styles from "./List.module.scss";
+import "./List.scss";
 
 const List = ({ movies, handleSelectedMovie }) => {
   return (
-    <div className={styles.tableContainer}>
-      <table className={styles.table}>
+    <div className={"tableContainer"}>
+      <table className={"table"}>
         <caption>
           <h2>Movie List</h2>
         </caption>

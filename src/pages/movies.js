@@ -7,12 +7,9 @@ import {
 } from "../features/movies/moviesSlice";
 import { useNavigate } from "react-router-dom";
 import Loading from "../components/loading/loading";
-import InputBar from "../components/inputBar";
-import FilterSelection from "../components/filterSelection";
-import FilterYear from "../components/filterYear";
-import MovieList from "../components/movieList/list";
+import MovieList from "../components/movie/list";
+import SearchBar from "../components/movie/searchBar";
 import Pagination from "../components/pagination/pagination";
-import { MOVIE_TYPES } from "../constants/data";
 
 const Movies = () => {
   const { movies, searchParams, status, totalPages } = useSelector(
@@ -28,25 +25,9 @@ const Movies = () => {
 
   const handleSelectedMovie = (e, movie) => {
     e.preventDefault();
-    console.log("handleSelectedMovie movie::::", movie);
+    // console.log("handleSelectedMovie movie::::", movie);
     dispatch(setSelectedMovie(movie));
     navigate(`/movie/${movie.imdbID}`);
-  };
-
-  const handleSearch = () => {
-    dispatch(fetchMovies(searchParams));
-  };
-
-  const setSearchInput = (searchInput) => {
-    dispatch(setSearchParams({ ...searchParams, searchInput }));
-  };
-
-  const setReleaseYear = (releaseYear) => {
-    dispatch(setSearchParams({ ...searchParams, releaseYear }));
-  };
-
-  const setMovieType = (type) => {
-    dispatch(setSearchParams({ ...searchParams, type }));
   };
 
   const setPaginationPage = (page) => {
@@ -57,17 +38,7 @@ const Movies = () => {
   return (
     <div>
       <div>
-        <InputBar
-          setInputValue={setSearchInput}
-          inputValue={searchParams.searchInput}
-        />
-        <FilterYear setYear={setReleaseYear} year={searchParams.releaseYear} />
-        <FilterSelection
-          option={searchParams.type}
-          setOption={setMovieType}
-          optionList={MOVIE_TYPES}
-        />
-        <button onClick={handleSearch}>Search</button>
+        <SearchBar />
       </div>
       <div>
         <MovieList movies={movies} handleSelectedMovie={handleSelectedMovie} />
