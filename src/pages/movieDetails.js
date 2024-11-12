@@ -2,10 +2,11 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchMovieDetails } from "../features/movies/moviesSlice";
+import Loading from "../components/loading/loading";
 import "./movieDetails.scss";
 
 const MovieDetails = () => {
-  const { selectedMovieDetails: movie } = useSelector((state) => state.movies);
+  const { selectedMovieDetails: movie, status } = useSelector((state) => state.movies);
   const { id } = useParams();
   const dispatch = useDispatch();
 
@@ -16,6 +17,8 @@ const MovieDetails = () => {
 
   return (
     <div className="movie-details">
+      {status === "loading" ? <Loading /> : ""}
+
       <div className="movie-image-container">
         <img src={`${movie.Poster}`} alt={`${movie.Title}`} />
       </div>
