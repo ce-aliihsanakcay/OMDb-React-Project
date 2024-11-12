@@ -47,7 +47,7 @@ const Movies = () => {
           handlePageChange={setPaginationPage}
         />
       </div>
-      <div>{status === "loading" ? <Loading /> : ""}</div>
+      {status === "loading" ? <Loading /> : ""}
     </div>
   );
 };
