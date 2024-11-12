@@ -10,18 +10,18 @@ import Loading from "../components/loading/loading";
 import InputBar from "../components/inputBar";
 import FilterSelection from "../components/filterSelection";
 import FilterYear from "../components/filterYear";
+import MovieList from "../components/movieList/list";
 import { MOVIE_TYPES } from "../constants/data";
 
 const Movies = () => {
   const { movies, searchParams, status } = useSelector((state) => state.movies);
-  // console.log("xxx searchParams: ", searchParams);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (movies.length > 0) return;
     dispatch(fetchMovies(searchParams));
-  }, [dispatch, searchParams]);
+  }, [dispatch, searchParams, movies]);
 
   const handleSelectedMovie = (e, movie) => {
     e.preventDefault();
@@ -61,26 +61,8 @@ const Movies = () => {
         />
         <button onClick={handleSearch}>Search</button>
       </div>
-      <div className="movie-list">
-        <h2>Movie List</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Release Date</th>
-              <th>IMDb ID</th>
-            </tr>
-          </thead>
-          <tbody>
-            {movies.map((movie, index) => (
-              <tr key={index} onClick={(e) => handleSelectedMovie(e, movie)}>
-                <td>{movie.Title}</td>
-                <td>{movie.Year}</td>
-                <td>{movie.imdbID}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div>
+        <MovieList movies={movies} handleSelectedMovie={handleSelectedMovie} />
       </div>
       <div>{status === "loading" ? <Loading /> : ""}</div>
     </div>
