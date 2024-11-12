@@ -25,7 +25,6 @@ const Movies = () => {
 
   const handleSelectedMovie = (e, movie) => {
     e.preventDefault();
-    // console.log("handleSelectedMovie movie::::", movie);
     dispatch(setSelectedMovie(movie));
     navigate(`/movie/${movie.imdbID}`);
   };

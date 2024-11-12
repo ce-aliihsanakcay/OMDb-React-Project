@@ -31,7 +31,6 @@ export const fetchMoviesBySearch = async ({
       promises = await Promise.allSettled(promises);
       response.data.Search = promises.map((p) => p.value);
     }
-    // console.log("response.data", response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching movies:", error);
