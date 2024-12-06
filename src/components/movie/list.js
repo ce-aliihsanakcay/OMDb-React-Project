@@ -13,11 +13,7 @@ const List = ({ movies, handleSelectedMovie }) => {
             <th>Name</th>
             <th>Release Date</th>
             <th>IMDb ID</th>
-            <th>imdbRating</th>
-            <th>Director</th>
-            <th>Genre</th>
             <th>Type</th>
-            <th>Country</th>
           </tr>
         </thead>
         <tbody>
@@ -26,11 +22,7 @@ const List = ({ movies, handleSelectedMovie }) => {
               <td>{movie.Title}</td>
               <td>{movie.Year}</td>
               <td>{movie.imdbID}</td>
-              <td>{movie.imdbRating}</td>
-              <td>{movie.Director}</td>
-              <td>{movie.Genre}</td>
               <td>{movie.Type}</td>
-              <td>{movie.Country}</td>
             </tr>
           ))}
         </tbody>

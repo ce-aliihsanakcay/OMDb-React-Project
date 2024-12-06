@@ -24,13 +24,6 @@ export const fetchMoviesBySearch = async ({
   try {
     const url = `${OMDB_BASE_URL}?${queryParams}`;
     const response = await axios.get(url);
-    if (response.data.Search?.length > 0) {
-      let promises = response.data.Search.map(async (movie) =>
-        fetchMovieByTitleOrImdbID({ imdbID: movie.imdbID })
-      );
-      promises = await Promise.allSettled(promises);
-      response.data.Search = promises.map((p) => p.value);
-    }
     return response.data;
   } catch (error) {
     console.error("Error fetching movies:", error);
